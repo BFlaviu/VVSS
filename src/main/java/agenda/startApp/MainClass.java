@@ -39,6 +39,7 @@ public class MainClass {
 					contactRep);
 			ServiceActivity activityService= new ServiceActivity(activityRep);
 
+
 			User user = null;
 			in = new BufferedReader(new InputStreamReader(System.in));
 			while (user == null) {
@@ -144,9 +145,10 @@ public class MainClass {
 			Activity act = new Activity(user.getName(), start, end,
 					new LinkedList<Contact>(), description);
 
-			activityService.addActivity(act);
-
-			System.out.printf("S-a adugat cu succes\n");
+			if (activityService.addActivity(act))
+				System.out.printf("S-a adugat cu succes\n");
+			else
+				System.out.println("Eroare la adaugare\n");
 		} catch (IOException e) {
 			System.out.printf("Eroare de citire: %s\n" + e.getMessage());
 		}
@@ -185,6 +187,7 @@ public class MainClass {
 	}
 
 	private static void printMenu() {
+
 		System.out.printf("Please choose option:\n");
 		System.out.printf("1. Adauga contact\n");
 		System.out.printf("2. Adauga activitate\n");

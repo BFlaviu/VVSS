@@ -14,8 +14,10 @@ public class ServiceActivity {
         this.repo = repo;
     }
 
-    public void addActivity(Activity act){
-        repo.addActivity(act);
+    public boolean addActivity(Activity act){
+        if (repo.addActivity(act))
+            return true;
+        return false;
     }
 
     public List<Activity> getActivities(String name, Date d){
