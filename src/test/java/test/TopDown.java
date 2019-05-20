@@ -1,4 +1,4 @@
-package test.Integration;
+package test;
 
 import agenda.controller.ServiceActivity;
 import agenda.controller.ServiceContact;
@@ -6,9 +6,7 @@ import agenda.exceptions.InvalidFormatException;
 import agenda.model.Activity;
 import agenda.model.Contact;
 import agenda.repository.classes.RepositoryActivityFile;
-import agenda.repository.classes.RepositoryActivityMock;
 import agenda.repository.classes.RepositoryContactFile;
-import agenda.repository.classes.RepositoryContactMock;
 import agenda.repository.interfaces.RepositoryActivity;
 import agenda.repository.interfaces.RepositoryContact;
 import org.junit.Before;
@@ -21,7 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class BigBang {
+public class TopDown {
     private RepositoryActivity rep;
     private RepositoryContact repCon;
     private ServiceContact serviceContact;
@@ -43,9 +41,9 @@ public class BigBang {
     public void A_Test() {
         Contact c = new Contact();
         try {
-             c = new Contact("name", "address1", "+4071122334455", "email");
+            c = new Contact("name", "address1", "+4071122334455", "email");
         } catch (
-        InvalidFormatException e) {
+                InvalidFormatException e) {
             assertTrue(false);
         }
 
@@ -81,7 +79,7 @@ public class BigBang {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         try {
             Activity act = new Activity("name1",
-                    df.parse("01/01/2017 12:00"),
+                    df.parse("01/01/2017 11:00"),
                     df.parse("01/01/2018 13:00"),
                     null,
                     "Lunch break");
@@ -98,8 +96,59 @@ public class BigBang {
     }
 
     @Test
-    public void A_B_C_Test() {
+    public void P_A_Test() {
+        Contact c = new Contact();
+        try {
+            c = new Contact("name", "address1", "+4071122334455", "email");
+        } catch (
+                InvalidFormatException e) {
+            assertTrue(false);
+        }
 
+        if (serviceContact.addContact(c)){
+            assertTrue(true);
+        }
+        else
+            assertTrue(false);
+
+        assert contactSize + 1 == serviceContact.getContacts().size();
+    }
+
+    @Test
+    public void P_A_B_Test() {
+        Contact c = new Contact();
+        try {
+            c = new Contact("name", "address1", "+4071122334455", "email");
+        } catch (
+                InvalidFormatException e) {
+            assertTrue(false);
+        }
+
+        if (serviceContact.addContact(c)){
+            assertTrue(true);
+        }
+        else
+            assertTrue(false);
+
+        assert contactSize + 1 == serviceContact.getContacts().size();
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        try {
+            Activity act = new Activity("name1",
+                    df.parse("01/01/2017 12:00"),
+                    df.parse("01/01/2018 13:00"),
+                    null,
+                    "Lunch break");
+            assertTrue(rep.addActivity(act));
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+
+        assert activitySize + 1 == serviceActivity.getActivities().size();
+    }
+
+    @Test
+    public void P_A_B_C_Test() {
         //F01
         Contact c = new Contact();
         try {
@@ -119,7 +168,7 @@ public class BigBang {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         try {
             Activity act = new Activity("name1",
-                    df.parse("01/01/2017 17:00"),
+                    df.parse("01/01/2017 18:00"),
                     df.parse("01/01/2017 19:00"),
                     null,
                     "Lunch break");
@@ -139,9 +188,9 @@ public class BigBang {
         calendar.set(2017, Calendar.JANUARY, 1);
         List<Activity> result = rep.activitiesOnDate("name1", calendar.getTime());
 
-
         assertTrue(result.size() == 2);
 
         assert result.get(0).getStart().compareTo(result.get(1).getStart()) < 0;
     }
 }
+
