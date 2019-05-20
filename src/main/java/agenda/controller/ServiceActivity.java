@@ -20,7 +20,11 @@ public class ServiceActivity {
         return false;
     }
 
-    public List<Activity> getActivities(String name, Date d){
+    public List<Activity> getActivitiesByDate(String name, Date d){
         return repo.activitiesOnDate(name,d);
+    }
+
+    public List<Activity> getActivities() {
+        return repo.getActivities();
     }
 }

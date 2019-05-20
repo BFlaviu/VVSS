@@ -99,7 +99,7 @@ public class MainClass {
 			System.out.println("Activitatile din ziua " + d.toString() + ": ");
 
 			List<Activity> act = activityService
-					.getActivities(user.getName(), d);
+					.getActivitiesByDate(user.getName(), d);
 			for (Activity a : act) {
 				System.out.printf("%s - %s: %s - %s with: ", a.getStart()
 						.toString(), a.getDuration().toString(), a

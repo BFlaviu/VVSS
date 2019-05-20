@@ -4,6 +4,8 @@ import agenda.model.Contact;
 import agenda.repository.classes.RepositoryContactFile;
 import agenda.repository.interfaces.RepositoryContact;
 
+import java.util.List;
+
 public class ServiceContact {
 
     RepositoryContact repo;
@@ -28,5 +30,9 @@ public class ServiceContact {
             repo.addContact(c);
             return true;
         }
+    }
+
+    public List<Contact> getContacts(){
+        return repo.getContacts();
     }
 }
