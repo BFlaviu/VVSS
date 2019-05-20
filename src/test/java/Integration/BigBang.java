@@ -1,4 +1,4 @@
-package test;
+package Integration;
 
 import agenda.controller.ServiceActivity;
 import agenda.controller.ServiceContact;
